@@ -124,41 +124,14 @@ dotnet new ca-sln -n MyApp
 
 ## 실제 프로젝트 생성
 
-### 1. API 프로젝트 생성
 ``` zsh
-dotnet new webapi -n BlueberryHomework.Api
-```
-
-### 2. CQRS 관련 프로젝트들 추가
-``` zsh
-dotnet new classlib -n BlueberryHomework.Application
-dotnet new classlib -n BlueberryHomework.Domain
-dotnet new classlib -n BlueberryHomework.Infrastructure
-```
-
-### 3. 프로젝트 참조 연결
-``` zsh
-dotnet add BlueberryHomework.Api reference BlueberryHomework.Application BlueberryHomework.Domain
-dotnet add BlueberryHomework.Application reference BlueberryHomework.Domain
-dotnet add BlueberryHomework.Application reference BlueberryHomework.Infrastructure
+$ dotnet new webapi -n BlueberryHomeworkApp\ncd BlueberryHomeworkApp
 ```
 
 ``` zsh
-
+$ mkdir Controllers Repositories
 ```
 
 ``` zsh
-
-```
-
-``` zsh
-
-```
-
-``` zsh
-
-```
-
-``` zsh
-
+$ dotnet run
 ```
