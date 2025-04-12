@@ -12,4 +12,10 @@ public interface INameRepository {
     /// </summary>
     /// <returns>이름 목록</returns>
     List<string> GetName();
+
+    /// <summary>
+    /// 이름 삭제
+    /// </summary>
+    /// <param name="index">이름 인덱스</param>
+    void DeleteNameByIndex(int index);
 }

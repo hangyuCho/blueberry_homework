@@ -1,0 +1,19 @@
+### 모든 이름 조회
+GET http://localhost:5045/api/name
+Accept: application/json
+
+### 새로운 이름 추가
+POST http://localhost:5045/api/name
+Content-Type: application/json
+
+"차은우"
+
+### 다른 이름 추가
+POST http://localhost:5045/api/name
+Content-Type: application/json
+
+"카리나"
+
+### 이름 삭제
+DELETE http://localhost:5045/api/name/0
+Accept: application/json

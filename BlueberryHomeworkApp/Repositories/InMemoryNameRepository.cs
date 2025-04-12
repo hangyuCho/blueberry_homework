@@ -10,4 +10,12 @@ public class InMemoryNameRepository : INameRepository {
     public List<string> GetName() {
         return _names;
     }
+
+    public void DeleteNameByIndex(int index) {
+        if (index < 0 || index >= _names.Count)
+        {
+            throw new ArgumentException("유효하지 않은 인덱스입니다.");
+        }
+        _names.RemoveAt(index);
+    }
 }
