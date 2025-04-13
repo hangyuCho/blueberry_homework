@@ -1,24 +1,22 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.5.2.0
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueberryHomeworkApp", "BlueberryHomeworkApp\BlueberryHomeworkApp.csproj", "{E0A4C550-2837-F12D-FA69-A564D589A338}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueberryHomeworkApp", "BlueberryHomeworkApp\BlueberryHomeworkApp.csproj", "{52F572B7-F1BA-45CC-860C-A72B719F9F19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E0A4C550-2837-F12D-FA69-A564D589A338}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E0A4C550-2837-F12D-FA69-A564D589A338}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E0A4C550-2837-F12D-FA69-A564D589A338}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E0A4C550-2837-F12D-FA69-A564D589A338}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6DF5DD3D-DFA7-4F98-968A-BB39858672F1}
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52F572B7-F1BA-45CC-860C-A72B719F9F19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F572B7-F1BA-45CC-860C-A72B719F9F19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F572B7-F1BA-45CC-860C-A72B719F9F19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F572B7-F1BA-45CC-860C-A72B719F9F19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

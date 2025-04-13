@@ -136,13 +136,18 @@ $ mkdir Controllers Repositories
 $ dotnet run
 ```
 
-### 01. 초기 리스트가 없을 때 리스트 취득 결과
-![](./demo001.png)
-### 02. 이름이 추가된 결과
-![](./demo002.png)
-### 03. 복수의 이름이 등록된 상태에서 리스트 취득 결과
-![](./demo003.png)
-### 04. 0번째 인덱스를 삭제한 결과
-![](./demo004.png)
-### 05. 「04」를 실행 후 리스트를 취득한 결과
-![](./demo005.png)
+
+다음 항목에 대한 캡처를 포함해야 합니다:
+* 데이터 생성(Create) 응답
+![](./01.create.png)
+* 데이터 조회(GET) 응답
+![](./02.find.png)
+* 데이터 삭제(DELETE) 응답
+![](./03.delete.png)
+* 유효성 검증 실패 시 오류 응답(TODO: ERROR status)
+  * noindex
+![](./04-1.noindex.png)
+  * noname
+![](./04-2.noname.png)
+  * overlength
+![](./04-3.overlength.png)

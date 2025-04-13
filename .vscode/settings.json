@@ -1,0 +1,13 @@
+{
+    "omnisharp.useModernNet": true,
+    "omnisharp.monoPath": null,
+    "omnisharp.useGlobalMono": "never",
+    "omnisharp.path": "latest",
+    "omnisharp.loggingLevel": "debug",
+    "csharp.suppressDotnetInstallWarning": true,
+    "csharp.suppressDotnetRestoreNotification": true,
+    "omnisharp.enableRoslynAnalyzers": true,
+    "omnisharp.enableEditorConfigSupport": true,
+    "omnisharp.enableAsyncCompletion": true,
+    "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true
+}

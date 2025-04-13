@@ -1,5 +1,6 @@
-using BlueberryHomeworkApp.Middleware;
+using BlueberryHomeworkApp.Domain.CreateName;
 using BlueberryHomeworkApp.Repositories;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +12,6 @@ builder.Services.AddSingleton<INameRepository, InMemoryNameRepository>();
 
 var app = builder.Build();
 
-// 예외 처리 미들웨어 등록
-app.UseMiddleware<ExceptionHandlingMiddleware>();
-
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();
