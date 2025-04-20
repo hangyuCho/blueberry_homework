@@ -9,15 +9,6 @@ public class InMemoryNameRepository : INameRepository {
     private int _index = 0;
 
     public Result<string> AddName(CreateNameCommand command) {
-        if (string.IsNullOrWhiteSpace(command.Name) || command.Name.Length > 50)
-        {
-            return Result<string>.Error("name must be between 1 and 50 characters");
-        }
-        if (_names.ContainsValue(command.Name))
-        {
-            return Result<string>.Error("already exists");
-        }
-
         _names.Add(_index, command.Name);
         _index++;
         return Result<string>.Ok();
