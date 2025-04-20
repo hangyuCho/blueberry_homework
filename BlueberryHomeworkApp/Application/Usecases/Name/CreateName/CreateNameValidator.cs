@@ -2,9 +2,9 @@ using FluentValidation;
 
 namespace BlueberryHomeworkApp.Domain.CreateName;
 
-public class CreateNameCommandValidator : AbstractValidator<CreateNameCommand>
+public class CreateNameValidator : AbstractValidator<CreateNameCommand>
 {
-    public CreateNameCommandValidator()
+    public CreateNameValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Name is required")
