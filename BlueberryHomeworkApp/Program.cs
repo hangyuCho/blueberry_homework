@@ -1,7 +1,7 @@
-using System.Reflection;
-using BlueberryHomeworkApp.Domain.CreateName;
+using BlueberryHomeworkApp.Application.Usecases.Name.CreateName;
+using BlueberryHomeworkApp.Domain.Entities;
 using BlueberryHomeworkApp.Infrastructure;
-using BlueberryHomeworkApp.Repositories;
+using BlueberryHomeworkApp.Infrastructure.Repositories;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +18,19 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// UnitOfWork등록
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+// Repository등록
+builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+
+// Mediator등록
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+// Handler 의존성 주입
+// builder.Services.AddMediatR(cfg =>
+//     cfg.RegisterServicesFromAssemblyContaining<CreateNameCommand>());
+
 // Validate 의존성 주입
 builder.Services
     .AddFluentValidationAutoValidation()
@@ -25,12 +38,25 @@ builder.Services
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateNameValidator>();
 
-// Repository 의존성 주입
-builder.Services.AddSingleton<INameRepository, InMemoryNameRepository>();
-
-    
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowAll", policy =>
+        {
+            policy
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+    });
+    app.UseCors("AllowAll");
+    app.UseSwagger();
+    app.UseSwaggerUI(); // 기본 경로: /swagger
+}
 
 app.MapControllers();
 

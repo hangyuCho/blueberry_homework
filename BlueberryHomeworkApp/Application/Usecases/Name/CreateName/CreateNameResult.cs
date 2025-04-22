@@ -1,3 +1,3 @@
-namespace BlueberryHomeworkApp.Domain.CreateName;
+namespace BlueberryHomeworkApp.Application.Usecases.Name.CreateName;
 
 record CreateNameResult();

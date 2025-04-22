@@ -1,3 +1,7 @@
-namespace BlueberryHomeworkApp.Domain.CreateName;
+using MediatR;
 
-public record CreateNameCommand(string Name);
+namespace BlueberryHomeworkApp.Application.Usecases.Name.CreateName;
+
+public record CreateNameCommand(string Name) : IRequest<IResult>
+{
+}
