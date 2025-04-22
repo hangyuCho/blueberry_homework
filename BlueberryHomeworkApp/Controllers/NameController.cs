@@ -37,8 +37,8 @@ public class NameController(IMediator mediator) : ControllerBase
     ///     지정된 인덱스의 이름을 삭제합니다.
     /// </summary>
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> DeleteName([FromBody] DeleteNameCommand command)
+    public async Task<IActionResult> DeleteName(int id)
     {
-        return (await mediator.Send(command)).ToApiResult();
+        return (await mediator.Send(new DeleteNameCommand(id))).ToApiResult();
     }
 }

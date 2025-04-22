@@ -1,6 +1,9 @@
 using BlueberryHomeworkApp.Domain.Entities;
+using BlueberryHomeworkApp.Domain.Exceptions;
 using BlueberryHomeworkApp.Infrastructure;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace BlueberryHomeworkApp.Application.Usecases.Name.CreateName;
 
@@ -30,7 +33,14 @@ public class CreateNameHandler(
         var saveResult = await unitOfWork.CommitAsync(cancellationToken);
         if (saveResult.IsError)
         {
-            return addResult.AsError();
+            var isPostgresUniqueError = saveResult.GetError() is DbUpdateException
+            {
+                InnerException: PostgresException { SqlState: "23505" }
+            };
+            // 이름이 중복일 경우 에러를 발생시킴
+            return isPostgresUniqueError
+                ? Result.Error(new ConflictException("name", request.Name))
+                : saveResult.AsError();
         }
 
         return Result.Ok();

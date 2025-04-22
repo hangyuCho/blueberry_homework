@@ -27,32 +27,26 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 // Mediator등록
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-// Handler 의존성 주입
-// builder.Services.AddMediatR(cfg =>
-//     cfg.RegisterServicesFromAssemblyContaining<CreateNameCommand>());
-
 // Validate 의존성 주입
 builder.Services
     .AddFluentValidationAutoValidation()
-    .AddFluentValidationClientsideAdapters();
+    .AddFluentValidationClientsideAdapters()
+    .AddValidatorsFromAssemblyContaining<CreateNameCommand>();
 
-builder.Services.AddValidatorsFromAssemblyContaining<CreateNameValidator>();
-
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    builder.Services.AddCors(options =>
-    {
-        options.AddPolicy("AllowAll", policy =>
-        {
-            policy
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader();
-        });
-    });
     app.UseCors("AllowAll");
     app.UseSwagger();
     app.UseSwaggerUI(); // 기본 경로: /swagger

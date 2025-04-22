@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace BlueberryHomeworkApp.Application.Usecases.Name.DeleteName;
 
-public abstract class DeleteNameValidator : AbstractValidator<DeleteNameCommand>
+public class DeleteNameValidator : AbstractValidator<DeleteNameCommand>
 {
-    protected DeleteNameValidator()
+    public DeleteNameValidator()
     {
         RuleFor(x => x.Id)
             .NotEmpty().WithMessage("Id is required")
