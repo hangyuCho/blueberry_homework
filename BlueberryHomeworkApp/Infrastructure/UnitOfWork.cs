@@ -11,7 +11,7 @@ public class UnitOfWork(AppDbContext context) : IUnitOfWork
         return new EfRepository<T>(context);
     }
 
-    public async Task<IResult> CommitAsync(CancellationToken cancellationToken)
+    public async Task<IResult> SaveEntitiesAsync(CancellationToken cancellationToken)
     {
         try
         {

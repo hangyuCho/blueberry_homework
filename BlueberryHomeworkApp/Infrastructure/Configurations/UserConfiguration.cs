@@ -4,16 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BlueberryHomeworkApp.Infrastructure.Configurations;
 
-public class PersonNameConfiguration: IEntityTypeConfiguration<PersonName>
+public class UserConfiguration : IEntityTypeConfiguration<User>
 {
-    public void Configure(EntityTypeBuilder<PersonName> builder)
+    public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.HasKey(p => p.Id);
 
         builder.Property(p => p.Name)
             .IsRequired()
             .HasMaxLength(50);
-        
+
         builder.HasIndex(p => p.Name)
             .IsUnique();
     }

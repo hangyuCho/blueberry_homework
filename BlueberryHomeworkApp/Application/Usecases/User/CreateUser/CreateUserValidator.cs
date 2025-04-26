@@ -1,10 +1,10 @@
 using FluentValidation;
 
-namespace BlueberryHomeworkApp.Application.Usecases.Name.CreateName;
+namespace BlueberryHomeworkApp.Application.Usecases.User.CreateUser;
 
-public class CreateNameValidator : AbstractValidator<CreateNameCommand>
+public class CreateUserValidator : AbstractValidator<CreateUserCommand>
 {
-    public CreateNameValidator()
+    public CreateUserValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("Name is required")

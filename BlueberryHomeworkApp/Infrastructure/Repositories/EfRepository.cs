@@ -1,5 +1,6 @@
 using BlueberryHomeworkApp.Application;
 using BlueberryHomeworkApp.Domain.Exceptions;
+using BlueberryHomeworkApp.Domain.Specification;
 using Microsoft.EntityFrameworkCore;
 using IResult = BlueberryHomeworkApp.Application.IResult;
 
@@ -46,6 +47,21 @@ public class EfRepository<T>(AppDbContext dbContext) : IRepository<T>
                     ? Result<T>.Error(new DataNotFoundException(typeof(T), id))
                     : Result<T>.Ok(entity);
             return Result<T>.Error(new ArgumentNullException(nameof(id)));
+        }
+        catch (Exception ex)
+        {
+            return await Task.FromResult(Result<T>.Error(ex));
+        }
+    }
+
+    public async Task<IResult<T>> GetAsync<TKey>(ISpecification<T> spec)
+    {
+        try
+        {
+            var query = _dbSet.AsQueryable();
+            var filteredQuery = query.Where(spec.ToExpression());
+            return Result<T>.Ok(await filteredQuery.FirstOrDefaultAsync() ??
+                                throw new DataNotFoundException(typeof(T), ""));
         }
         catch (Exception ex)
         {

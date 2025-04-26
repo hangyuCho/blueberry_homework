@@ -1,5 +1,3 @@
-using BlueberryHomeworkApp.Application.Usecases.Name.FindAllName;
-
 namespace BlueberryHomeworkApp.Application;
 
 public class Result<T> : IResult<T>

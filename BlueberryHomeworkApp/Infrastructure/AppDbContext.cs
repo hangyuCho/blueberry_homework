@@ -6,10 +6,10 @@ namespace BlueberryHomeworkApp.Infrastructure;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
-    public DbSet<PersonName> PersonNames { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new PersonNameConfiguration());
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
     }
 }

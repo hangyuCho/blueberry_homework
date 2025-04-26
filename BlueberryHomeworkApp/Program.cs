@@ -1,4 +1,4 @@
-using BlueberryHomeworkApp.Application.Usecases.Name.CreateName;
+using BlueberryHomeworkApp.Application.Usecases.User.CreateUser;
 using BlueberryHomeworkApp.Domain.Entities;
 using BlueberryHomeworkApp.Infrastructure;
 using BlueberryHomeworkApp.Infrastructure.Repositories;
@@ -31,7 +31,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Progr
 builder.Services
     .AddFluentValidationAutoValidation()
     .AddFluentValidationClientsideAdapters()
-    .AddValidatorsFromAssemblyContaining<CreateNameCommand>();
+    .AddValidatorsFromAssemblyContaining<CreateUserCommand>();
 
 builder.Services.AddCors(options =>
 {
