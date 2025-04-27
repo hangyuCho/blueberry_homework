@@ -1,6 +1,7 @@
 using BlueberryHomeworkApp.Domain.Exceptions;
 using BlueberryHomeworkApp.Infrastructure;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -17,14 +18,22 @@ public class UpdateUserByNameHandler(
         var userRepository = unitOfWork.GetRepository<Domain.Entities.User>();
 
         // 갱신 대상 취득
-        var getResult = await userRepository.GetAsync(new GetUserByNameSpecification(request.Name));
+        var getResult = await userRepository.GetAsync(request.Id);
 
         if (getResult.IsError)
         {
             return Result<UpdateUserByNameResult>.Error(getResult.GetError()!);
         }
 
+
         var user = getResult.Get();
+        // 유저명이 같을 경우
+        if (user.Name == request.Name)
+        {
+            return Result<UpdateUserByNameResult>.Error(
+                new ArgumentException("A name with the same value already exists."));
+        }
+
         user.Name = request.Name;
         user.UpdatedAt = DateTime.UtcNow;
 
@@ -52,7 +61,7 @@ public class UpdateUserByNameHandler(
         }
         else
         {
-            return Result<UpdateUserByNameResult>.Ok(new UpdateUserByNameResult(user.Name));
+            return Result<UpdateUserByNameResult>.Ok(new UpdateUserByNameResult(user.Id, user.Name));
         }
     }
 }

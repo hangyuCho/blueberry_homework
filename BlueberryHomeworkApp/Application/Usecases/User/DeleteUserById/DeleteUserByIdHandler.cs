@@ -4,22 +4,22 @@ using MediatR;
 
 namespace BlueberryHomeworkApp.Application.Usecases.User.DeleteUserById;
 
-public class DeleteUserByNameHandler(
+public class DeleteUserByIdHandler(
     IUnitOfWork unitOfWork
-) : IRequestHandler<DeleteUserByNameCommand, IResult<DeleteUserByNameResult>>
+) : IRequestHandler<DeleteUserByIdCommand, IResult<DeleteUserByIdResult>>
 {
-    public async Task<IResult<DeleteUserByNameResult>> Handle(DeleteUserByNameCommand request,
+    public async Task<IResult<DeleteUserByIdResult>> Handle(DeleteUserByIdCommand request,
         CancellationToken cancellationToken)
     {
         // 레포지토리 객체를 취득
         var userRepository = unitOfWork.GetRepository<Domain.Entities.User>();
 
         // 삭제 대상 취득
-        var getResult = await userRepository.GetAsync(new GetUserByNameSpecification(request.Name));
+        var getResult = await userRepository.GetAsync(request.Id);
 
         if (getResult.IsError)
         {
-            return Result<DeleteUserByNameResult>.Error(getResult.GetError()!);
+            return Result<DeleteUserByIdResult>.Error(getResult.GetError()!);
         }
 
         var getUser = getResult.Get();
@@ -30,13 +30,13 @@ public class DeleteUserByNameHandler(
         // 처리 중 에러가 발생될 경우
         if (deleteResult.IsError)
         {
-            return Result<DeleteUserByNameResult>.Error(deleteResult.GetError()!);
+            return Result<DeleteUserByIdResult>.Error(deleteResult.GetError()!);
         }
 
         // DB에 데이터를 데이터베이스에 반영
         await unitOfWork.SaveEntitiesAsync(cancellationToken);
 
-        return Result<DeleteUserByNameResult>.Ok(
-            new DeleteUserByNameResult(getUser.Id));
+        return Result<DeleteUserByIdResult>.Ok(
+            new DeleteUserByIdResult(getUser.Id));
     }
 }

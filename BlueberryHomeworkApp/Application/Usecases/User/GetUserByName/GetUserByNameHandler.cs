@@ -1,9 +1,10 @@
+using BlueberryHomeworkApp.Application.Usecases.User.FindAllUser;
 using BlueberryHomeworkApp.Infrastructure;
 using MediatR;
 
-namespace BlueberryHomeworkApp.Application.Usecases.User.FindAllUser;
+namespace BlueberryHomeworkApp.Application.Usecases.User.GetUserByName;
 
-public class FindAllUserHandler(
+public class GetUserByNameHandler(
     IUnitOfWork unitOfWork
 ) : IRequestHandler<FindAllUserQuery, IResult<List<FindAllUserResult>>>
 {

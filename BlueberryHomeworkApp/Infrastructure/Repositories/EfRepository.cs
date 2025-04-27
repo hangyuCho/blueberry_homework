@@ -54,7 +54,7 @@ public class EfRepository<T>(AppDbContext dbContext) : IRepository<T>
         }
     }
 
-    public async Task<IResult<T>> GetAsync<TKey>(ISpecification<T> spec)
+    public async Task<IResult<T>> GetAsync(ISpecification<T> spec)
     {
         try
         {
