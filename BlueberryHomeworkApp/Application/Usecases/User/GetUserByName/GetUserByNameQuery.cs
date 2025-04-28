@@ -3,6 +3,6 @@ using MediatR;
 
 namespace BlueberryHomeworkApp.Application.Usecases.User.GetUserByName;
 
-public record GetUserByNameQuery : IRequest<IResult<List<FindAllUserResult>>>
+public record GetUserByNameQuery(string Name) : IRequest<IResult<GetUserByNameResult>>
 {
 }

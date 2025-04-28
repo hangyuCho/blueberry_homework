@@ -1,4 +1,5 @@
 using BlueberryHomeworkApp.Application.Usecases.User.CreateUser;
+using BlueberryHomeworkApp.Application.Usecases.User.GetUserByName;
 using BlueberryHomeworkApp.Domain.Entities;
 using BlueberryHomeworkApp.Infrastructure;
 using BlueberryHomeworkApp.Infrastructure.Repositories;
@@ -16,7 +17,8 @@ builder.Services.AddSwaggerGen();
 
 // DbContext등록
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseLazyLoadingProxies()
+        .UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // UnitOfWork등록
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -31,7 +33,8 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Progr
 builder.Services
     .AddFluentValidationAutoValidation()
     .AddFluentValidationClientsideAdapters()
-    .AddValidatorsFromAssemblyContaining<CreateUserCommand>();
+    .AddValidatorsFromAssemblyContaining<CreateUserValidator>()
+    .AddValidatorsFromAssemblyContaining<GetUserByNameValidator>();
 
 builder.Services.AddCors(options =>
 {
