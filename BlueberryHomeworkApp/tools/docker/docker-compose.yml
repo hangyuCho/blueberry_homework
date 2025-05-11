@@ -13,5 +13,18 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
 
+  mongodb:
+    image: mongo:latest
+    container_name: blueberry-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin_pass
+      MONGO_INITDB_DATABASE: blueberry_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
 volumes:
   pg_data:
+  mongo_data:
