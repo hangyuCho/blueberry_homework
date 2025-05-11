@@ -20,11 +20,20 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseLazyLoadingProxies()
         .UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddSingleton<MongoDbContext>(serviceProvider =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+    var connectionString = configuration.GetConnectionString("MongoDbConnection"); // MongoDB 연결 문자열을 설정
+    return new MongoDbContext(connectionString);
+});
+
 // UnitOfWork등록
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Repository등록
-builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+// builder.Services.AddScoped(typeof(IRepository<>), typeof(AppDbContext));
+// builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoDbContext));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
 
 // Mediator등록
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
