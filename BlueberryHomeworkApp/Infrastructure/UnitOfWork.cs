@@ -11,17 +11,4 @@ public class UnitOfWork(MongoDbContext context) : IUnitOfWork
         //return new EfRepository<T>(context);
         return new MongoRepository<T>(context);
     }
-
-    public async Task<IResult> SaveEntitiesAsync(CancellationToken cancellationToken)
-    {
-        try
-        {
-            // await context.SaveChangesAsync(cancellationToken);
-            return Result.Ok();
-        }
-        catch (Exception ex)
-        {
-            return Result.Error(ex);
-        }
-    }
 }

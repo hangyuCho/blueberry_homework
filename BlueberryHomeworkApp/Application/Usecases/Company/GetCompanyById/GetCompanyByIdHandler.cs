@@ -30,7 +30,7 @@ public class GetCompanyByIdHandler(
                 company.Id,
                 company.Name,
                 company.CreatedAt,
-                company.User
+                company.User ?? null
             ));
     }
 }

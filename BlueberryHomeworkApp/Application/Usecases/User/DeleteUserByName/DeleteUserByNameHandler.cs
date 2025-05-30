@@ -34,9 +34,6 @@ public class DeleteUserByNameHandler(
             return Result<DeleteUserByNameResult>.Error(deleteResult.GetError()!);
         }
 
-        // DB에 데이터를 데이터베이스에 반영
-        await unitOfWork.SaveEntitiesAsync(cancellationToken);
-
         return Result<DeleteUserByNameResult>.Ok(
             new DeleteUserByNameResult(getUser.Name));
     }

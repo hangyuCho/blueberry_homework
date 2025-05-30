@@ -6,14 +6,11 @@ using IResult = BlueberryHomeworkApp.Application.IResult;
 
 namespace BlueberryHomeworkApp.Infrastructure.Repositories
 {
-    public class MongoRepository<T> : IRepository<T> where T : class
+    public class MongoRepository<T>(MongoDbContext dbContext, string collectionName = "blueberry_db")
+        : IRepository<T>
+        where T : class
     {
-        private readonly IMongoCollection<T> _collection;
-
-        public MongoRepository(MongoDbContext dbContext, string collectionName = "blueberry_db")
-        {
-            _collection = dbContext.GetCollection<T>(collectionName);
-        }
+        private readonly IMongoCollection<T> _collection = dbContext.GetCollection<T>(collectionName);
 
         public async Task<IResult> AddAsync(T entity)
         {
@@ -32,7 +29,7 @@ namespace BlueberryHomeworkApp.Infrastructure.Repositories
         {
             try
             {
-                var filter = Builders<T>.Filter.Eq("_id", entity.GetType().GetProperty("Id").GetValue(entity, null));
+                var filter = Builders<T>.Filter.Eq("_id", entity.GetType().GetProperty("Id")?.GetValue(entity, null));
                 var result = await _collection.ReplaceOneAsync(filter, entity);
                 return result.IsAcknowledged ? Result.Ok() : Result.Error(new Exception("Update failed"));
             }
@@ -49,7 +46,7 @@ namespace BlueberryHomeworkApp.Infrastructure.Repositories
                 var filter = Builders<T>.Filter.Eq("_id", id);
                 var entity = await _collection.Find(filter).FirstOrDefaultAsync();
                 return entity == null
-                    ? Result<T>.Error(new DataNotFoundException(typeof(T), id))
+                    ? Result<T>.Error(new DataNotFoundException(typeof(T), id!))
                     : Result<T>.Ok(entity);
             }
             catch (Exception ex)
@@ -62,7 +59,7 @@ namespace BlueberryHomeworkApp.Infrastructure.Repositories
         {
             try
             {
-                var filter = Builders<T>.Filter.Eq("_id", entity.GetType().GetProperty("Id").GetValue(entity, null));
+                var filter = Builders<T>.Filter.Eq("_id", entity.GetType().GetProperty("Id")?.GetValue(entity, null));
                 var result = await _collection.DeleteOneAsync(filter);
                 return result.IsAcknowledged ? Result.Ok() : Result.Error(new Exception("Delete failed"));
             }

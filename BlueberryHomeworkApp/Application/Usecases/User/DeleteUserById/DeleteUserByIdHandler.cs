@@ -33,9 +33,6 @@ public class DeleteUserByIdHandler(
             return Result<DeleteUserByIdResult>.Error(deleteResult.GetError()!);
         }
 
-        // DB에 데이터를 데이터베이스에 반영
-        await unitOfWork.SaveEntitiesAsync(cancellationToken);
-
         return Result<DeleteUserByIdResult>.Ok(
             new DeleteUserByIdResult(getUser.Id));
     }

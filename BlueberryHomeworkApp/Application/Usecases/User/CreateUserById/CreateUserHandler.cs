@@ -1,10 +1,8 @@
-using BlueberryHomeworkApp.Domain.Exceptions;
+using BlueberryHomeworkApp.Application.Usecases.User.CreateUser;
 using BlueberryHomeworkApp.Infrastructure;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Npgsql;
 
-namespace BlueberryHomeworkApp.Application.Usecases.User.CreateUser;
+namespace BlueberryHomeworkApp.Application.Usecases.User.CreateUserById;
 
 public class CreateUserHandler(
     IUnitOfWork unitOfWork
@@ -32,22 +30,7 @@ public class CreateUserHandler(
         }
 
         // DB에 데이터를 데이터베이스에 반영
-        var saveResult = await unitOfWork.SaveEntitiesAsync(cancellationToken);
-        if (saveResult.IsError)
-        {
-            var isPostgresUniqueError = saveResult.GetError() is DbUpdateException
-            {
-                InnerException: PostgresException { SqlState: "23505" }
-            };
-            // 이름이 중복일 경우 에러를 발생시킴
-            return isPostgresUniqueError
-                ? Result<CreateUserResult>.Error(new ConflictException("name", request.Name))
-                : Result<CreateUserResult>.Error(saveResult.GetError()!);
-        }
-        else
-        {
-            return Result<CreateUserResult>.Ok(
-                new CreateUserResult(userId));
-        }
+        return Result<CreateUserResult>.Ok(
+            new CreateUserResult(userId));
     }
 }

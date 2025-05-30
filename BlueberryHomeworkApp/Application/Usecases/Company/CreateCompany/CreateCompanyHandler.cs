@@ -32,23 +32,7 @@ public class CreateCompanyHandler(
             return Result<CreateCompanyResult>.Error(addResult.GetError()!);
         }
 
-        // DB에 데이터를 데이터베이스에 반영
-        var saveResult = await unitOfWork.SaveEntitiesAsync(cancellationToken);
-        if (saveResult.IsError)
-        {
-            var isPostgresUniqueError = saveResult.GetError() is DbUpdateException
-            {
-                InnerException: PostgresException { SqlState: "23505" }
-            };
-            // 이름이 중복일 경우 에러를 발생시킴
-            return isPostgresUniqueError
-                ? Result<CreateCompanyResult>.Error(new ConflictException("name", request.Name))
-                : Result<CreateCompanyResult>.Error(saveResult.GetError()!);
-        }
-        else
-        {
-            return Result<CreateCompanyResult>.Ok(
-                new CreateCompanyResult(companyId));
-        }
+        return Result<CreateCompanyResult>.Ok(
+            new CreateCompanyResult(companyId));
     }
 }

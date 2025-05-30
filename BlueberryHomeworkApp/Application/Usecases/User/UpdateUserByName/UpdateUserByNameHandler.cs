@@ -41,27 +41,8 @@ public class UpdateUserByNameHandler(
         var addResult = await userRepository.UpdateAsync(user);
 
         // 처리 중 에러가 발생될 경우
-        if (addResult.IsError)
-        {
-            return Result<UpdateUserByNameResult>.Error(addResult.GetError()!);
-        }
-
-        // DB에 데이터를 데이터베이스에 반영
-        var saveResult = await unitOfWork.SaveEntitiesAsync(cancellationToken);
-        if (saveResult.IsError)
-        {
-            var isPostgresUniqueError = saveResult.GetError() is DbUpdateException
-            {
-                InnerException: PostgresException { SqlState: "23505" }
-            };
-            // 이름이 중복일 경우 에러를 발생시킴
-            return isPostgresUniqueError
-                ? Result<UpdateUserByNameResult>.Error(new ConflictException("name", request.Name))
-                : Result<UpdateUserByNameResult>.Error(saveResult.GetError()!);
-        }
-        else
-        {
-            return Result<UpdateUserByNameResult>.Ok(new UpdateUserByNameResult(user.Id, user.Name));
-        }
+        return addResult.IsError
+            ? Result<UpdateUserByNameResult>.Error(addResult.GetError()!)
+            : Result<UpdateUserByNameResult>.Ok(new UpdateUserByNameResult(user.Id, user.Name));
     }
 }
