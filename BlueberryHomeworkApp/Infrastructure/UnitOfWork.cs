@@ -1,14 +1,22 @@
-using BlueberryHomeworkApp.Application;
 using BlueberryHomeworkApp.Infrastructure.Repositories;
-using IResult = BlueberryHomeworkApp.Application.IResult;
 
 namespace BlueberryHomeworkApp.Infrastructure;
 
-public class UnitOfWork(MongoDbContext context) : IUnitOfWork
+public class UnitOfWork : IUnitOfWork
 {
+    private readonly MongoDbContext _context;
+    private readonly ILoggerFactory _loggerFactory;
+
+    public UnitOfWork(MongoDbContext context, ILoggerFactory loggerFactory)
+    {
+        _context = context;
+        _loggerFactory = loggerFactory;
+    }
+
     public IRepository<T> GetRepository<T>() where T : class
     {
-        //return new EfRepository<T>(context);
-        return new MongoRepository<T>(context);
+        var collectionName = typeof(T).Name.ToLower(); // 예: User -> user, Company -> company
+        var logger = _loggerFactory.CreateLogger<MongoRepository<T>>();
+        return new MongoRepository<T>(_context, collectionName, logger);
     }
 }

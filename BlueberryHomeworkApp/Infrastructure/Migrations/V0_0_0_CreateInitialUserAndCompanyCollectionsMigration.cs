@@ -14,13 +14,13 @@ public class V0_0_0_CreateInitialUserAndCompanyCollectionsMigration : MigrationB
 
     public override async Task Up()
     {
-        Console.WriteLine("마이그레이션 시작: V0_0_0_CreateInitialUserAndCompanyCollectionsMigration");
+        Console.WriteLine("V0_0_0 마이그레이션 시작");
         
-        // Users 컬렉션 생성
-        Console.WriteLine("Users 컬렉션 생성 시작");
-        var userCollection = Database.GetCollection<BsonDocument>("users");
+        // User 컬렉션 생성
+        Console.WriteLine("User 컬렉션 생성 시작");
+        var userCollection = Database.GetCollection<BsonDocument>("user");
         
-        // Users 컬렉션 인덱스 생성
+        // User 컬렉션 인덱스 생성
         var userIndexes = new List<CreateIndexModel<BsonDocument>>
         {
             new CreateIndexModel<BsonDocument>(
@@ -28,20 +28,21 @@ public class V0_0_0_CreateInitialUserAndCompanyCollectionsMigration : MigrationB
                 new CreateIndexOptions { Unique = true }
             ),
             new CreateIndexModel<BsonDocument>(
-                Builders<BsonDocument>.IndexKeys.Ascending("Name")
+                Builders<BsonDocument>.IndexKeys.Ascending("Name"),
+                new CreateIndexOptions { Unique = true }
             ),
             new CreateIndexModel<BsonDocument>(
                 Builders<BsonDocument>.IndexKeys.Ascending("CreatedAt")
             )
         };
         await userCollection.Indexes.CreateManyAsync(userIndexes);
-        Console.WriteLine("Users 컬렉션 생성 완료");
+        Console.WriteLine("User 컬렉션 생성 완료");
 
-        // Companies 컬렉션 생성
-        Console.WriteLine("Companies 컬렉션 생성 시작");
-        var companyCollection = Database.GetCollection<BsonDocument>("companies");
+        // Company 컬렉션 생성
+        Console.WriteLine("Company 컬렉션 생성 시작");
+        var companyCollection = Database.GetCollection<BsonDocument>("company");
         
-        // Companies 컬렉션 인덱스 생성
+        // Company 컬렉션 인덱스 생성
         var companyIndexes = new List<CreateIndexModel<BsonDocument>>
         {
             new CreateIndexModel<BsonDocument>(
@@ -49,7 +50,8 @@ public class V0_0_0_CreateInitialUserAndCompanyCollectionsMigration : MigrationB
                 new CreateIndexOptions { Unique = true }
             ),
             new CreateIndexModel<BsonDocument>(
-                Builders<BsonDocument>.IndexKeys.Ascending("Name")
+                Builders<BsonDocument>.IndexKeys.Ascending("Name"),
+                new CreateIndexOptions { Unique = true }
             ),
             new CreateIndexModel<BsonDocument>(
                 Builders<BsonDocument>.IndexKeys.Ascending("UserId")
@@ -59,16 +61,14 @@ public class V0_0_0_CreateInitialUserAndCompanyCollectionsMigration : MigrationB
             )
         };
         await companyCollection.Indexes.CreateManyAsync(companyIndexes);
-        Console.WriteLine("Companies 컬렉션 생성 완료");
+        Console.WriteLine("Company 컬렉션 생성 완료");
         
-        Console.WriteLine("마이그레이션 완료: V0_0_0_CreateInitialUserAndCompanyCollectionsMigration");
+        Console.WriteLine("V0_0_0 마이그레이션 완료");
     }
 
     public override async Task Down()
     {
-        Console.WriteLine("마이그레이션 롤백 시작: V0_0_0_CreateInitialUserAndCompanyCollectionsMigration");
-        await Database.DropCollectionAsync("users");
-        await Database.DropCollectionAsync("companies");
-        Console.WriteLine("마이그레이션 롤백 완료: V0_0_0_CreateInitialUserAndCompanyCollectionsMigration");
+        await Database.DropCollectionAsync("user");
+        await Database.DropCollectionAsync("company");
     }
 }

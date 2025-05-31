@@ -13,5 +13,7 @@ public interface IRepository<T> where T : class
 
     Task<IResult<T>> GetAsync<TKey>(TKey id);
     Task<IResult<T>> GetAsync(ISpecification<T> spec);
+
+    Task<IResult<List<T>>> FindAsync(ISpecification<T> spec);
     Task<IResult<List<T>>> FindAllAsync();
 }

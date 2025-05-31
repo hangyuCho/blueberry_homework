@@ -19,8 +19,7 @@ public class CreateUserHandler(
         {
             Id = userId,
             Name = request.Name,
-            CreatedAt = DateTimeOffset.UtcNow,
-            Company = null
+            CreatedAt = DateTimeOffset.UtcNow
         });
 
         // 처리 중 에러가 발생될 경우

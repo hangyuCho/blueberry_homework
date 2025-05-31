@@ -16,7 +16,7 @@
       <jdbc-url>mongodb://localhost:27017/blueberry_db</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.host.port" />
-        <property name="authSource" value="blueberry_db" />
+        <property name="authSource" value="admin" />
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
         <property name="com.intellij.clouds.kubernetes.db.container.port" />
       </jdbc-additional-properties>

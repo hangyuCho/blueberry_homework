@@ -1,5 +1,3 @@
-using BlueberryHomeworkApp.Application.Usecases.User.GetUserByName;
-using BlueberryHomeworkApp.Domain.Specification;
 using BlueberryHomeworkApp.Infrastructure;
 using MediatR;
 
@@ -25,12 +23,23 @@ public class GetCompanyByIdHandler(
 
         var company = getResult.Get();
 
+        var userRepository = unitOfWork.GetRepository<Domain.Entities.User>();
+        var getUserResult = await userRepository.GetAsync(company.UserId);
+
+        if (getUserResult.IsError)
+        {
+            return Result<GetCompanyByIdResult>.Error(getUserResult.GetError()!);
+        }
+
+        var user = getUserResult.Get();
+
         return Result<GetCompanyByIdResult>.Ok(
             new GetCompanyByIdResult(
-                company.Id,
-                company.Name,
-                company.CreatedAt,
-                company.User ?? null
+                Id: company.Id,
+                Name: company.Name,
+                CreatedAt: company.CreatedAt,
+                UserId: user.Id,
+                UserName: user.Name
             ));
     }
 }

@@ -25,7 +25,7 @@ builder.Services.AddSingleton<MongoDbContext>(serviceProvider =>
 });
 
 // UnitOfWork등록
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddSingleton<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
 
 // Mediator등록
