@@ -21,6 +21,7 @@ namespace BlueberryHomeworkApp.Infrastructure
                 {
                     cm.AutoMap();
                     cm.MapIdProperty(u => u.Id); // Id를 _id로 매핑
+                    cm.MapMember(u => u.Email).SetDefaultValue((User u) => u.Id.ToString() + "@temp.com");
                     cm.SetIgnoreExtraElements(true); // 추가 필드 무시
                 });
             }
@@ -34,7 +35,7 @@ namespace BlueberryHomeworkApp.Infrastructure
                     cm.MapMember(c => c.Name).SetIsRequired(true);
                     cm.MapMember(c => c.CreatedAt).SetIsRequired(true);
                     cm.MapMember(c => c.UpdatedAt).SetIsRequired(false);
-                    cm.MapMember(c => c.UserId).SetIsRequired(false);
+                    cm.MapMember(c => c.Address).SetDefaultValue("N/A");
                     cm.MapMember(c => c.IsActive).SetDefaultValue(true); // IsActive 기본값을 true로 설정
                     cm.SetIgnoreExtraElements(true); // 추가 필드 무시
                 });

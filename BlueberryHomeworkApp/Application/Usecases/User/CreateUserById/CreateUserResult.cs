@@ -1,4 +1,4 @@
-namespace BlueberryHomeworkApp.Application.Usecases.User.CreateUser;
+namespace BlueberryHomeworkApp.Application.Usecases.User.CreateUserById;
 
 public record CreateUserResult(string Id)
 {

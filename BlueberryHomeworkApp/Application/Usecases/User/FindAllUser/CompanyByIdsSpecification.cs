@@ -7,6 +7,6 @@ public class CompanyByIdsSpecification(List<string> companyIds) : ISpecification
 {
     public Expression<Func<Domain.Entities.Company, bool>> ToExpression()
     {
-        return company => companyIds.Contains(company.UserId ?? "");
+        return company => companyIds.Contains(company.Id ?? "");
     }
 }

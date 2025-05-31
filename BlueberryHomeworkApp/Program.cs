@@ -1,4 +1,4 @@
-using BlueberryHomeworkApp.Application.Usecases.User.CreateUser;
+using BlueberryHomeworkApp.Application.Usecases.User.CreateUserById;
 using BlueberryHomeworkApp.Application.Usecases.User.GetUserByName;
 using BlueberryHomeworkApp.Infrastructure;
 using BlueberryHomeworkApp.Infrastructure.Migrations;
@@ -51,11 +51,13 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // MongoDB 연결 설정
-var mongoConnectionString = builder.Configuration.GetConnectionString("MongoDbConnection") 
-    ?? throw new InvalidOperationException("MongoDB 연결 문자열이 설정되지 않았습니다. appsettings.json에서 'ConnectionStrings:MongoDbConnection'을 확인해주세요.");
+var mongoConnectionString = builder.Configuration.GetConnectionString("MongoDbConnection")
+                            ?? throw new InvalidOperationException(
+                                "MongoDB 연결 문자열이 설정되지 않았습니다. appsettings.json에서 'ConnectionStrings:MongoDbConnection'을 확인해주세요.");
 var mongoClient = new MongoClient(mongoConnectionString);
-var databaseName = builder.Configuration.GetSection("Mongo:DatabaseName").Value 
-    ?? throw new InvalidOperationException("MongoDB 데이터베이스 이름이 설정되지 않았습니다. appsettings.json에서 'Mongo:DatabaseName'을 확인해주세요.");
+var databaseName = builder.Configuration.GetSection("Mongo:DatabaseName").Value
+                   ?? throw new InvalidOperationException(
+                       "MongoDB 데이터베이스 이름이 설정되지 않았습니다. appsettings.json에서 'Mongo:DatabaseName'을 확인해주세요.");
 var database = mongoClient.GetDatabase(databaseName);
 
 // 마이그레이션 실행

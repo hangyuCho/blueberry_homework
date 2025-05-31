@@ -1,11 +1,10 @@
-using BlueberryHomeworkApp.Application.Usecases.User.CreateUser;
 using FluentValidation;
 
-namespace BlueberryHomeworkApp.Application.Usecases.User.UpdateUserByName;
+namespace BlueberryHomeworkApp.Application.Usecases.User.UpdateUser;
 
-public class UpdateUserByNameValidator : AbstractValidator<UpdateUserByNameCommand>
+public class UpdateUserValidator : AbstractValidator<UpdateUserCommand>
 {
-    public UpdateUserByNameValidator()
+    public UpdateUserValidator()
     {
         RuleFor(x => x.Id)
             .NotEmpty().WithMessage("Id is required");

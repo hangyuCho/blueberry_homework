@@ -1,4 +1,3 @@
-using BlueberryHomeworkApp.Application.Usecases.User.CreateUser;
 using FluentValidation;
 
 namespace BlueberryHomeworkApp.Application.Usecases.User.GetUserByName;

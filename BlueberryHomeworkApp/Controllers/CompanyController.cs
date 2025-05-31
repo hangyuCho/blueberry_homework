@@ -1,11 +1,9 @@
 using BlueberryHomeworkApp.Application;
 using BlueberryHomeworkApp.Application.Usecases.Company.CreateCompany;
 using BlueberryHomeworkApp.Application.Usecases.Company.GetCompanyById;
-using BlueberryHomeworkApp.Application.Usecases.User.CreateUser;
 using BlueberryHomeworkApp.Application.Usecases.User.DeleteUserById;
 using BlueberryHomeworkApp.Application.Usecases.User.DeleteUserByName;
 using BlueberryHomeworkApp.Application.Usecases.User.FindAllUser;
-using BlueberryHomeworkApp.Application.Usecases.User.UpdateUserByName;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,9 +19,11 @@ public class CompanyController(IMediator mediator) : ControllerBase
         return (await mediator.Send(new GetCompanyByIdQuery(id))).ToApiResult();
     }
 
+    /*
     [HttpPost]
     public async Task<IActionResult> CreateName([FromBody] CreateCompanyCommand command)
     {
         return (await mediator.Send(command)).ToApiResult();
     }
+    */
 }

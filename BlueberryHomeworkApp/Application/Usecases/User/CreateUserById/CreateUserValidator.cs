@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace BlueberryHomeworkApp.Application.Usecases.User.CreateUser;
+namespace BlueberryHomeworkApp.Application.Usecases.User.CreateUserById;
 
 public class CreateUserValidator : AbstractValidator<CreateUserCommand>
 {

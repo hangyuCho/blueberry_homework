@@ -23,23 +23,22 @@ public class GetCompanyByIdHandler(
 
         var company = getResult.Get();
 
+        // 회사에 소속된 모든 직원을 취득
         var userRepository = unitOfWork.GetRepository<Domain.Entities.User>();
-        var getUserResult = await userRepository.GetAsync(company.UserId);
+        var findUserSpec = new UserByCompanyIdSpecification(company.Id);
+        var findUserResult = await userRepository.FindAsync(findUserSpec);
 
-        if (getUserResult.IsError)
+        if (findUserResult.IsError)
         {
-            return Result<GetCompanyByIdResult>.Error(getUserResult.GetError()!);
+            return Result<GetCompanyByIdResult>.Error(findUserResult.GetError()!);
         }
-
-        var user = getUserResult.Get();
 
         return Result<GetCompanyByIdResult>.Ok(
             new GetCompanyByIdResult(
                 Id: company.Id,
                 Name: company.Name,
                 CreatedAt: company.CreatedAt,
-                UserId: user.Id,
-                UserName: user.Name
+                Users: findUserResult.Get()
             ));
     }
 }
